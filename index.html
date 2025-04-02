@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>小伍資本旗下圖片生成平台</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.7.1/jszip.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1><i class="fas fa-images"></i> NFT合成</h1>
+            <p>上傳部件，設定稀有度，生成獨特組合！</p>
+        </header>
+        
+        <div class="app-container">
+            <!-- 上傳區 -->
+            <div class="upload-section card">
+                <h2><i class="fas fa-upload"></i> 上傳部件</h2>
+                <div class="form-group">
+                    <label for="category-select">部件類別:</label>
+                    <select id="category-select">
+                        <option value="background">背景</option>
+                        <option value="body">身體</option>
+                        <option value="head">頭部</option>
+                        <option value="accessory">配件</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="image-upload">選擇圖片:</label>
+                    <input type="file" id="image-upload" accept="image/*">
+                </div>
+                
+                <div class="form-group">
+                    <label for="probability">出現機率 (1-100):</label>
+                    <div class="probability-range">
+                        <input type="range" id="probability" min="1" max="100" value="50">
+                        <span id="probability-value">50%</span>
+                    </div>
+                    <div class="rarity-indicator">
+                        <span class="common">普通</span>
+                        <span class="uncommon">稀有</span>
+                        <span class="rare">史詩</span>
+                        <span class="legendary">傳說</span>
+                    </div>
+                </div>
+                
+                <!-- 新增的50%不出現選項 -->
+                <div class="form-group">
+                    <label>
+                        <input type="checkbox" id="optional-toggle"> 
+                        <i class="fas fa-dice"></i> 此類別有50%機率不出現
+                    </label>
+                </div>
+
+                <!-- 在上傳表單部分添加這個 -->
+                <div class="form-group">
+                        <label for="folder-upload">或選擇整個資料夾:</label>
+                        <input type="file" id="folder-upload" webkitdirectory directory multiple>
+                </div>
+                
+                <button id="add-part-btn" class="btn-primary">
+                    <i class="fas fa-plus"></i> 添加部件
+                </button>
+            </div>
+            
+            <!-- 部件列表 -->
+            <div class="parts-section card">
+                <h2><i class="fas fa-list"></i> 部件庫</h2>
+                <div class="tabs">
+                    <button class="tab-btn active" data-category="all">全部</button>
+                    <button class="tab-btn" data-category="background">背景</button>
+                    <button class="tab-btn" data-category="body">身體</button>
+                    <button class="tab-btn" data-category="head">頭部</button>
+                    <button class="tab-btn" data-category="accessory">配件</button>
+                </div>
+                <div id="parts-list" class="parts-list"></div>
+            </div>
+            
+            <!-- 生成區 -->
+            <div class="generation-section card">
+                <h2><i class="fas fa-magic"></i> 生成圖片</h2>
+                
+                <div class="generation-controls">
+                    <div class="form-group">
+                        <label for="generate-count">生成數量:</label>
+                        <select id="generate-count">
+                            <option value="10"></option>
+                            <option value="50"></option>
+                            <option value="222"></option>
+                        </select>
+                    </div>
+                    
+                    <button id="generate-btn" class="btn-primary">
+                        <i class="fas fa-random"></i> 隨機生成
+                    </button>
+                    <button id="clear-all-btn" class="btn-secondary">
+                        <i class="fas fa-trash"></i> 清空全部
+                    </button>
+                </div>
+                
+                <div id="results-container" class="results-container">
+                    <div class="main-result">
+                        <canvas id="result-canvas" width="500" height="500"></canvas>
+                    </div>
+                    <div id="batch-results" class="batch-results"></div>
+                </div>
+                
+                <div class="download-actions">
+                    <button id="save-btn" class="btn-primary">
+                        <i class="fas fa-download"></i> 保存當前圖片
+                    </button>
+                    <button id="save-all-btn" class="btn-secondary">
+                        <i class="fas fa-download"></i> 保存全部圖片
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
